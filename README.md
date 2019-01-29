@@ -6,7 +6,7 @@ This bot now tweet to [@HourQuran](https://twitter.com/HourQuran) account at Twi
 
 ## Build
 
-To build this go app first you need create config file for your environment from `config/config_sample.go` like `config/config_dev.go` or `config/config_prod.go` then you should execute build command with tags like below:
+To build this go app first you need create config file for your environment from `config/config_sample.go` like `config/config_dev.go` or `config/config_prod.go` then you should execute build command with [build tags](https://golang.org/pkg/go/build/#hdr-Build_Constraints) like below:
 
 ``` sh
 go build -tags prod -o $GOPATH/bin/quran-twitter-bot
