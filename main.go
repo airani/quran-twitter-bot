@@ -28,6 +28,7 @@ const (
 )
 
 func main() {
+	log.Println("quran twitter bot started..")
 	ticker := time.NewTicker(interval)
 
 	for range ticker.C {
@@ -35,12 +36,14 @@ func main() {
 		for {
 			aye, err := newAyeByRand()
 			if err != nil {
+				log.Println(err.Error())
 				LogToFile(fmt.Sprintf("%q", err))
 				break
 			}
 
 			err = aye.sendAsTweet()
 			if err != nil {
+				log.Println(err.Error())
 				LogToFile(fmt.Sprintf("%q", err))
 			} else {
 				break
