@@ -119,7 +119,7 @@ func CanTweet(s string) bool {
 
 // Tweet a string to twitter account
 func Tweet(t string) error {
-	configOauth1 := oauth1.NewConfig(config.TWITTER_CONSUMER_KET, config.TWITTER_CONSUMER_SECRET_KEY)
+	configOauth1 := oauth1.NewConfig(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET_KEY)
 	tokenOauth1 := oauth1.NewToken(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 	httpClient := configOauth1.Client(oauth1.NoContext, tokenOauth1)
 	client := twitter.NewClient(httpClient)
