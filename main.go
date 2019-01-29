@@ -18,6 +18,7 @@ import (
 	"upper.io/db.v3/mongo"
 )
 
+// Aye strcut
 type Aye struct {
 	ID         bson.ObjectId `bson:"_id,omitempty"`
 	SuraID     bson.ObjectId `bson:"_sura_id,omitempty"`
@@ -28,12 +29,14 @@ type Aye struct {
 	Sura
 }
 
+// Translate struct
 type Translate struct {
 	FooladvandFa string `bson:"fa-fooladvand"`
 	MakaremFa    string `bson:"fa-makarem"`
 	GhomesheiFa  string `bson:"fa-ghomshei"`
 }
 
+// Sura struct
 type Sura struct {
 	ID     bson.ObjectId `bson:"_id,omitempty"`
 	Number uint          `bson:"number,omitempty"`
@@ -53,50 +56,55 @@ func main() {
 			if err != nil {
 				LogToFile(fmt.Sprintf("%q", err))
 				break
-			} else {
-				if CanTweet(FormatAye(aye)) {
-					err = Tweet(FormatAye(aye))
-					if err != nil {
-						LogToFile(fmt.Sprintf("%q", err))
-					} else {
-						break
-					}
+			}
+
+			formatedAye := FormatAye(aye)
+
+			if CanTweet(formatedAye) {
+				err = Tweet(formatedAye)
+				if err != nil {
+					LogToFile(fmt.Sprintf("%q", err))
+				} else {
+					break
 				}
 			}
+
 		}
 	}
 }
 
-// RandAye returns randomly an Aye from Quran
-func RandAye() (Aye, error) {
-	var aye Aye
+const (
+	mongoDbAyeColl  = "aye"
+	mongoDbSuraColl = "sura"
 
+	logFile = "quran-tweet-bot_error.log"
+)
+
+// RandAye returns randomly an Aye from Quran
+func RandAye() (aye Aye, err error) {
 	sess, err := mongo.Open(config.Mongo())
 	if err != nil {
-		return aye, err
+		return
 	}
 	defer sess.Close()
 
-	ayeColl := sess.Collection("aye")
-
-	res := ayeColl.Find().
+	res := sess.Collection(mongoDbAyeColl).Find().
 		Limit(1).
 		Offset(rand.Intn(6236))
 
 	err = res.One(&aye)
 	if err != nil {
-		return aye, err
+		return
 	}
 
-	suraColl := sess.Collection("sura")
-
 	var sura Sura
-	err = suraColl.Find(db.Cond{"_id": aye.SuraID}).
+	err = sess.Collection(mongoDbSuraColl).
+		Find(db.Cond{"_id": aye.SuraID}).
 		One(&sura)
 
 	aye.Sura = sura
 
-	return aye, err
+	return
 }
 
 // FormatAye to prepare as string for tweet
@@ -130,7 +138,7 @@ func Tweet(t string) error {
 
 // LogToFile write log to a file
 func LogToFile(s string) {
-	f, err := os.OpenFile("quran-tweet-bot_error.log",
+	f, err := os.OpenFile(logFile,
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
