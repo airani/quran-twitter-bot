@@ -12,7 +12,7 @@ To build this go app first you need create config file for your environment from
 go build -tags prod -o $GOPATH/bin/quran-twitter-bot
 ```
 
-# TODO
+## TODO
 
 - [x] Add dev and prod environments with config files
 - [x] Add git repo
