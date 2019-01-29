@@ -19,21 +19,27 @@ import (
 	"upper.io/db.v3/mongo"
 )
 
-func main() {
-	ticker := time.NewTicker(1 * time.Hour)
+const (
+	mongoDbAyeColl  string        = "aye"
+	mongoDbSuraColl string        = "sura"
+	maxTweetLen     int           = 280
+	interval        time.Duration = 1 * time.Hour
+	logFile         string        = "quran-tweet-bot_error.log"
+)
 
-	var aye Aye
-	var err error
+func main() {
+	ticker := time.NewTicker(interval)
 
 	for range ticker.C {
+		// @ali we need to talk about this infinite loop
 		for {
-			aye, err = newAyeByRand()
+			aye, err := newAyeByRand()
 			if err != nil {
 				LogToFile(fmt.Sprintf("%q", err))
 				break
 			}
 
-			err := aye.sendAsTweet()
+			err = aye.sendAsTweet()
 			if err != nil {
 				LogToFile(fmt.Sprintf("%q", err))
 			} else {
@@ -43,13 +49,6 @@ func main() {
 		}
 	}
 }
-
-const (
-	mongoDbAyeColl  = "aye"
-	mongoDbSuraColl = "sura"
-
-	logFile = "quran-tweet-bot_error.log"
-)
 
 // Aye strcut
 type Aye struct {
@@ -62,7 +61,7 @@ type Aye struct {
 	Sura
 }
 
-// RandAye returns randomly an Aye from Quran
+// newAyeByRand returns randomly an Aye from Quran
 func newAyeByRand() (aye Aye, err error) {
 	sess, err := mongo.Open(config.Mongo())
 	if err != nil {
@@ -100,8 +99,7 @@ func (a *Aye) FormatAye() string {
 
 // CanTweet check a string can be tweet or not by checking string length
 func (a *Aye) CanTweet() bool {
-	s := a.FormatAye()
-	if utf8.RuneCountInString(s) > 280 {
+	if utf8.RuneCountInString(a.FormatAye()) > maxTweetLen {
 		return false
 	}
 
@@ -138,10 +136,10 @@ type Sura struct {
 
 // LogToFile write log to a file
 func LogToFile(s string) {
-	f, err := os.OpenFile(logFile,
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
+		return
 	}
 	defer f.Close()
 
