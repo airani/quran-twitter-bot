@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  quran-twitter-bot:
+    image: quran-twitter-bot
+    build:
+      context: .
+      dockerfile: Dockerfile

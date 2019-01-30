@@ -1,0 +1,24 @@
+# github.com/airani/quran-twitter-bot v0.0.0-20190129140353-595862f2ad9a
+github.com/airani/quran-twitter-bot/config
+# github.com/cenkalti/backoff v2.1.1+incompatible
+github.com/cenkalti/backoff
+# github.com/dghubble/go-twitter v0.0.0-20190108053744-7fd79e2bcc65
+github.com/dghubble/go-twitter/twitter
+# github.com/dghubble/oauth1 v0.5.0
+github.com/dghubble/oauth1
+# github.com/dghubble/sling v1.2.0
+github.com/dghubble/sling
+# github.com/google/go-querystring v1.0.0
+github.com/google/go-querystring/query
+# github.com/mavihq/persian v0.0.0-20180720112018-07dac0a5e732
+github.com/mavihq/persian
+# gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
+gopkg.in/mgo.v2/bson
+gopkg.in/mgo.v2/internal/json
+gopkg.in/mgo.v2
+gopkg.in/mgo.v2/internal/sasl
+gopkg.in/mgo.v2/internal/scram
+# upper.io/db.v3 v3.5.7+incompatible
+upper.io/db.v3
+upper.io/db.v3/mongo
+upper.io/db.v3/internal/immutable
