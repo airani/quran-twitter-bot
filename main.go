@@ -28,22 +28,19 @@ const (
 )
 
 func main() {
-	log.Println("quran twitter bot started..")
+	log.Println("Quran twitter bot started..")
 	ticker := time.NewTicker(interval)
 
 	for range ticker.C {
-		// @ali we need to talk about this infinite loop
 		for {
 			aye, err := newAyeByRand()
 			if err != nil {
-				log.Println(err.Error())
 				LogToFile(fmt.Sprintf("%q", err))
 				break
 			}
 
 			err = aye.sendAsTweet()
 			if err != nil {
-				log.Println(err.Error())
 				LogToFile(fmt.Sprintf("%q", err))
 			} else {
 				break
@@ -91,8 +88,17 @@ func newAyeByRand() (aye Aye, err error) {
 	return
 }
 
-// FormatAye to prepare as string for tweet
-func (a *Aye) FormatAye() string {
+// CanTweet check a string can be tweet or not by checking string length
+func CanTweet(s string) bool {
+	if utf8.RuneCountInString(s) > maxTweetLen {
+		return false
+	}
+
+	return true
+}
+
+// FormattedAsTweet to prepare as string for tweet
+func (a *Aye) FormattedAsTweet() string {
 	return fmt.Sprintf("«%s»\n\n%s\n\n%s:%s",
 		a.Text,
 		a.Translate.FooladvandFa,
@@ -100,24 +106,16 @@ func (a *Aye) FormatAye() string {
 		persian.ToPersianDigitsFromInt(int(a.Number)))
 }
 
-// CanTweet check a string can be tweet or not by checking string length
-func (a *Aye) CanTweet() bool {
-	if utf8.RuneCountInString(a.FormatAye()) > maxTweetLen {
-		return false
-	}
-
-	return true
-}
-
 func (a *Aye) sendAsTweet() error {
-	if !a.CanTweet() {
-		return errors.New("can't send tweet")
+	if !CanTweet(a.FormattedAsTweet()) {
+		return errors.New("aye length more than 280 char (twitter limit) and can't be tweet")
 	}
+
 	configOauth1 := oauth1.NewConfig(config.TWITTER_CONSUMER_KEY, config.TWITTER_CONSUMER_SECRET_KEY)
 	tokenOauth1 := oauth1.NewToken(config.TWITTER_ACCESS_TOKEN, config.TWITTER_ACCESS_TOKEN_SECRET)
 	httpClient := configOauth1.Client(oauth1.NoContext, tokenOauth1)
 	client := twitter.NewClient(httpClient)
-	_, _, err := client.Statuses.Update(a.FormatAye(), nil)
+	_, _, err := client.Statuses.Update(a.FormattedAsTweet(), nil)
 
 	return err
 }
