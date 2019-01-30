@@ -1,5 +1,3 @@
-# github.com/airani/quran-twitter-bot v0.0.0-20190129140353-595862f2ad9a
-github.com/airani/quran-twitter-bot/config
 # github.com/cenkalti/backoff v2.1.1+incompatible
 github.com/cenkalti/backoff
 # github.com/dghubble/go-twitter v0.0.0-20190108053744-7fd79e2bcc65

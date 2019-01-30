@@ -1,7 +1,6 @@
-module github.com/vchakoshy/quran-twitter-bot
+module github.com/airani/quran-twitter-bot
 
 require (
-	github.com/airani/quran-twitter-bot v0.0.0-20190129140353-595862f2ad9a
 	github.com/cenkalti/backoff v2.1.1+incompatible // indirect
 	github.com/dghubble/go-twitter v0.0.0-20190108053744-7fd79e2bcc65
 	github.com/dghubble/oauth1 v0.5.0

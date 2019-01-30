@@ -1,5 +1,3 @@
-github.com/airani/quran-twitter-bot v0.0.0-20190129140353-595862f2ad9a h1:rGrVzSBf2sN2mdtnZCVUOk5Q+vxF4ygesXeaQdbqJ0A=
-github.com/airani/quran-twitter-bot v0.0.0-20190129140353-595862f2ad9a/go.mod h1:zChjxXdLHQpI03j+SQyzU7pk8F5TwxsIQrn9GasDfJE=
 github.com/cenkalti/backoff v2.1.1+incompatible h1:tKJnvO2kl0zmb/jA5UKAt4VoEVw1qxKWjE/Bpp46npY=
 github.com/cenkalti/backoff v2.1.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QHaoyV4aDUVVkXQJJJ3NXXM=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
