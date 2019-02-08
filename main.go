@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"os"
 	"time"
 	"unicode/utf8"
 
@@ -24,7 +23,6 @@ const (
 	mongoDbSuraColl string        = "sura"
 	maxTweetLen     int           = 280
 	interval        time.Duration = 1 * time.Hour
-	logFile         string        = "quran-tweet-bot_error.log"
 )
 
 func main() {
@@ -35,19 +33,34 @@ func main() {
 		for {
 			aye, err := newAyeByRand()
 			if err != nil {
-				LogToFile(fmt.Sprintf("%q", err))
+				log.Println(fmt.Sprintf("%q", err))
 				break
 			}
 
 			err = aye.sendAsTweet()
 			if err != nil {
-				LogToFile(fmt.Sprintf("%q", err))
+				log.Println(fmt.Sprintf("%q", err))
 			} else {
 				break
 			}
 
 		}
 	}
+}
+
+// Translate struct
+type Translate struct {
+	FooladvandFa string `bson:"fa-fooladvand"`
+	MakaremFa    string `bson:"fa-makarem"`
+	GhomesheiFa  string `bson:"fa-ghomshei"`
+}
+
+// Sura struct
+type Sura struct {
+	ID     bson.ObjectId `bson:"_id,omitempty"`
+	Number uint          `bson:"number,omitempty"`
+	Name   string        `bson:"name,omitempty"`
+	Ayat   uint          `bson:"cnt_aye"`
 }
 
 // Aye strcut
@@ -118,33 +131,4 @@ func (a *Aye) sendAsTweet() error {
 	_, _, err := client.Statuses.Update(a.FormattedAsTweet(), nil)
 
 	return err
-}
-
-// Translate struct
-type Translate struct {
-	FooladvandFa string `bson:"fa-fooladvand"`
-	MakaremFa    string `bson:"fa-makarem"`
-	GhomesheiFa  string `bson:"fa-ghomshei"`
-}
-
-// Sura struct
-type Sura struct {
-	ID     bson.ObjectId `bson:"_id,omitempty"`
-	Number uint          `bson:"number,omitempty"`
-	Name   string        `bson:"name,omitempty"`
-	Ayat   uint          `bson:"cnt_aye"`
-}
-
-// LogToFile write log to a file
-func LogToFile(s string) {
-	f, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer f.Close()
-
-	logger := log.New(f, "", log.LstdFlags)
-	logger.Println(s)
-	log.Println(s)
 }
