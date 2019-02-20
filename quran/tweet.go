@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-	"unicode/utf8"
 )
 
 const (
@@ -35,13 +34,4 @@ func RunTweetSender() {
 
 		}
 	}
-}
-
-// CanTweet check a string can be tweet or not by checking string length
-func CanTweet(s string) bool {
-	if utf8.RuneCountInString(s) > maxTweetLen {
-		return false
-	}
-
-	return true
 }
