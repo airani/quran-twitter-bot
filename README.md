@@ -10,7 +10,14 @@ To build this go app first you need install go modules with `go mod`, [read more
 
 ``` sh
 go mod download
+
+# Run with simple configuration
+go run main.go tweetAye --config cmd/.cobra.json
+
+# Build
 go build -tags prod -o $GOPATH/bin/quran-twitter-bot
+
+
 ```
 
 ## TODO
