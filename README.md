@@ -17,5 +17,5 @@ go build -tags prod -o $GOPATH/bin/quran-twitter-bot
 - [x] Add dev and prod environments with config files
 - [x] Add git repo
 - [x] Add readme file
-- [ ] Dockerize
+- [x] Dockerize
 - [ ] Add test file
