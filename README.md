@@ -1,5 +1,7 @@
 # Quran Twitter Bot
 
+[![Build Status](https://travis-ci.com/airani/quran-twitter-bot.svg?branch=master)](https://travis-ci.com/airani/quran-twitter-bot)
+
 This is a Quran Twitter bot that tweets every hour an Aye of Quran with Persian translation. This bot wrriten by GoLang.
 
 This bot now tweet to [@HourQuran](https://twitter.com/HourQuran) account at Twitter.
