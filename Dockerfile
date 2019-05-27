@@ -2,6 +2,8 @@
 FROM golang:alpine AS builder
 RUN apk add --no-cache git ca-certificates
 WORKDIR /go/src/app
+COPY go.mod $WORKDIR
+COPY go.sum $WORKDIR
 COPY . .
 ENV GO111MODULE=on
 RUN go mod download

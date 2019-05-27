@@ -26,4 +26,4 @@ quran-twitter-bot tweetAye --config config/.cobra.json
 - [x] Add git repo
 - [x] Add readme file
 - [x] Dockerize
-- [ ] Add test file
+- [x] Add test file

@@ -4,3 +4,4 @@ services:
   quran-twitter-bot:
     image: quran-twitter-bot
     build: .
+    restart: always
