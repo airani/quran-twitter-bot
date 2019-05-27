@@ -1,3 +1,5 @@
 .idea
+.vscode
+vendor
 quran-twitter-bot
 quran-tweet-bot_error.log
