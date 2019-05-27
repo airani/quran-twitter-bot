@@ -5,8 +5,6 @@ matrix:
   include:
   - go: 1.12.x
     env: GO111MODULE=on
-  - go: master
-    env: GO111MODULE=on
 
 branches:
   only:
