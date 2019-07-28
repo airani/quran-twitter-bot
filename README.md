@@ -29,3 +29,6 @@ quran-twitter-bot tweetAye --config config/.cobra.json
 - [x] Add readme file
 - [x] Dockerize
 - [x] Add test file
+- [x] Stop working with DB and working with xml files for Quran data
+- [ ] Handle aye with required sajdeh
+- [ ] Tweet aye with image

@@ -1,4 +1,4 @@
-package quran
+package bot
 
 import (
 	"errors"
@@ -7,31 +7,28 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"github.com/airani/quran-twitter-bot/quran"
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	"github.com/mavihq/persian"
 	"github.com/spf13/viper"
 )
 
 const (
-	mongoDbAyeColl  string        = "aye"
-	mongoDbSuraColl string        = "sura"
-	maxTweetLen     int           = 280
-	interval        time.Duration = 1 * time.Hour
+	maxTweetLen int           = 280
+	interval    time.Duration = 1 * time.Hour
 )
 
-func RunTweetSender() {
+// Run twitter bot
+func Run() {
+	log.SetFlags(log.Lshortfile | log.LstdFlags)
 	log.Println("Quran twitter bot started..")
+
 	ticker := time.NewTicker(interval)
 
 	for range ticker.C {
 		for {
-			aye, err := newAyeByRand()
-			if err != nil {
-				log.Println(fmt.Sprintf("%q", err))
-				break
-			}
-
-			err = tweet(aye)
+			err := tweetRandAya()
 			if err != nil {
 				log.Println(fmt.Sprintf("%q", err))
 			} else {
@@ -42,8 +39,13 @@ func RunTweetSender() {
 	}
 }
 
-func tweet(a Aye) error {
-	if !CanTweet(a.String()) {
+func tweetRandAya() error {
+	q := quran.M
+	s := q.RandSura()
+	a := s.RandAya()
+	ts := tweetString(s, a)
+
+	if !canTweet(ts) {
 		return errors.New("aye length more than 280 char (twitter limit) and can't be tweet")
 	}
 
@@ -59,16 +61,25 @@ func tweet(a Aye) error {
 
 	httpClient := configOauth1.Client(oauth1.NoContext, tokenOauth1)
 	client := twitter.NewClient(httpClient)
-	_, _, err := client.Statuses.Update(a.String(), nil)
+	_, _, err := client.Statuses.Update(ts, nil)
 
 	return err
 }
 
-// CanTweet check a string can be tweet or not by checking string length
-func CanTweet(s string) bool {
+func canTweet(s string) bool {
 	if utf8.RuneCountInString(s) > maxTweetLen {
 		return false
 	}
-
 	return true
+}
+
+func tweetString(s quran.Sura, a quran.Aya) string {
+	faS := quran.Fa.Sura(s.Index).Aya(a.Index)
+	return fmt.Sprintf(
+		"«%s»\n\n%s\n\n%s:%s",
+		a.Text,
+		faS.Text,
+		s.Name,
+		persian.ToPersianDigitsFromInt(s.Index),
+	)
 }
