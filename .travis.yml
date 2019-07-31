@@ -19,7 +19,7 @@ install:
   - export PATH="${GOPATH}/bin:${GOROOT}/bin:${PATH}"
 
 script:
-  - go test -race -v ./quran
+  - go test -race -v ./...
   - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags prod -o $GOPATH/bin/app
 
 notifications:
