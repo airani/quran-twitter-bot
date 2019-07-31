@@ -40,7 +40,7 @@ func Run() {
 }
 
 func tweetRandAya() error {
-	q := quran.M
+	q := quran.New()
 	s := q.RandSura()
 	a := s.RandAya()
 	ts := tweetString(s, a)
@@ -74,7 +74,7 @@ func canTweet(s string) bool {
 }
 
 func tweetString(s quran.Sura, a quran.Aya) string {
-	faS := quran.Fa.Sura(s.Index).Aya(a.Index)
+	faS := quran.Fa().Sura(s.Index).Aya(a.Index)
 	return fmt.Sprintf(
 		"«%s»\n\n%s\n\n%s:%s",
 		a.Text,

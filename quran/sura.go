@@ -11,10 +11,10 @@ type Sura struct {
 
 // Aya Returns a Aya by number
 func (s Sura) Aya(n int) (a Aya) {
-	if n > len(s.Ayas) {
+	if n > len(s.Ayas) || n == 0 {
 		return
 	}
-	return s.Ayas[n]
+	return s.Ayas[n-1]
 }
 
 // RandAya Returns a Aya by random

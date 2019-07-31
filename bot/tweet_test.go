@@ -2,6 +2,8 @@ package bot
 
 import (
 	"testing"
+
+	"github.com/airani/quran-twitter-bot/quran"
 )
 
 func Test_canTweet(t *testing.T) {
@@ -46,6 +48,35 @@ func Test_canTweet(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := canTweet(tt.args.s); got != tt.want {
 				t.Errorf("canTweet() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_tweetString(t *testing.T) {
+	q := quran.New()
+
+	type args struct {
+		s quran.Sura
+		a quran.Aya
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			args: args{
+				s: q.Sura(1),
+				a: q.Sura(1).Aya(1),
+			},
+			want: "«بِسمِ اللَّهِ الرَّحمنِ الرَّحيمِ»\n\nبه نام خداوند رحمتگر مهربان\n\nالفاتحة:۱",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tweetString(tt.args.s, tt.args.a); got != tt.want {
+				t.Errorf("tweetString() = %v, want %v", got, tt.want)
 			}
 		})
 	}

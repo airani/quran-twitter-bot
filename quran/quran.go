@@ -3,13 +3,14 @@ package quran
 import (
 	"encoding/xml"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"os"
 )
 
 const (
-	datasetQuranSimpleFile         datasetFile = "dataset/quran-simple-min.xml"
-	datasetFooladvandTranslateFile             = "dataset/fa.fooladvand.xml"
+	datasetQuranSimpleFile         datasetFile = "../dataset/quran-simple-min.xml"
+	datasetFooladvandTranslateFile             = "../dataset/fa.fooladvand.xml"
 )
 
 type datasetFile string
@@ -19,26 +20,35 @@ type Quran struct {
 	Suras []Sura `xml:"sura"`
 }
 
-// M is Main struct of Quran
-var M Quran
-
-// Fa is Farsi translate of Quran
-var Fa Quran
+var base Quran
+var farsi Quran
 
 func init() {
 	var err error
 
-	M, err = newQuranByXML(datasetQuranSimpleFile)
+	base, err = newQuranByXML(datasetQuranSimpleFile)
 	if err != nil {
+		log.Println(err.Error())
 		return
 	}
 
-	Fa, err = newQuranByXML(datasetFooladvandTranslateFile)
+	farsi, err = newQuranByXML(datasetFooladvandTranslateFile)
 	if err != nil {
+		log.Println(err.Error())
 		return
 	}
 
 	return
+}
+
+// New Quran base instance
+func New() Quran {
+	return base
+}
+
+// Fa Quran Farsi translate instance
+func Fa() Quran {
+	return farsi
 }
 
 // newQuranByXML read xml file of quran and returns a Quran struct
@@ -62,10 +72,10 @@ func newQuranByXML(f datasetFile) (q Quran, err error) {
 
 // Sura Returns a Sura by number
 func (q Quran) Sura(n int) (s Sura) {
-	if n > len(q.Suras) {
+	if n > len(q.Suras) || n == 0 {
 		return
 	}
-	return q.Suras[n]
+	return q.Suras[n-1]
 }
 
 // RandSura Returns a Sura by random
