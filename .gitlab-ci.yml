@@ -12,5 +12,5 @@ deplop:
   only:
     - release
   script:
-    - git --work-tree=$WORK_DIR checkout -f origin/master
+    - git --work-tree=$WORK_DIR checkout -f origin/release
     - docker-compose up -d --build
