@@ -1,0 +1,16 @@
+before_script:
+  - pwd
+  - export WORK_DIR=/home/ali/docker/quran-twitter-bot/
+
+stages:
+  - deploy
+
+deplop:
+  stage: deploy
+  tags:
+    - hetzner1
+  only:
+    - release
+  script:
+    - git --work-tree=$WORK_DIR checkout -f origin/master
+    - docker-compose up -d --build
