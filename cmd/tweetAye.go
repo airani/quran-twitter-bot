@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/airani/quran-twitter-bot/bot"
@@ -42,6 +43,8 @@ func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
+
+		log.Println("config: " + cfgFile)
 	} else {
 		// Find home directory.
 		home, err := homedir.Dir()
