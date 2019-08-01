@@ -13,4 +13,5 @@ deplop:
     - release
   script:
     - git --work-tree=$WORK_DIR checkout -f origin/release
+    - cd $WORK_DIR
     - docker-compose up -d --build
