@@ -43,8 +43,12 @@ func tweetRandAya() error {
 	q := quran.New()
 	s := q.RandSura()
 	a := s.RandAya()
-	ts := tweetString(s, a)
 
+	if a.IsSajdaObligatory() {
+		return errors.New("aye is sajda obligatory")
+	}
+
+	ts := tweetString(s, a)
 	if !canTweet(ts) {
 		return errors.New("aye length more than 280 char (twitter limit) and can't be tweet")
 	}
