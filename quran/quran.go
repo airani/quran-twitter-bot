@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"time"
 )
 
 const (
@@ -80,6 +81,7 @@ func (q Quran) Sura(n int) (s Sura) {
 
 // RandSura Returns a Sura by random
 func (q Quran) RandSura() Sura {
-	n := rand.Intn(len(q.Suras)-1) + 1
+	rand.Seed(time.Now().UnixNano())
+	n := rand.Intn(len(q.Suras)) + 1
 	return q.Sura(n)
 }

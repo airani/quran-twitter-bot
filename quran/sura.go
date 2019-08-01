@@ -1,6 +1,9 @@
 package quran
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 // Sura struct of a sura of Quran
 type Sura struct {
@@ -19,6 +22,7 @@ func (s Sura) Aya(n int) (a Aya) {
 
 // RandAya Returns a Aya by random
 func (s Sura) RandAya() Aya {
-	n := rand.Intn(len(s.Ayas)-1) + 1
+	rand.Seed(time.Now().UnixNano())
+	n := rand.Intn(len(s.Ayas)) + 1
 	return s.Aya(n)
 }
