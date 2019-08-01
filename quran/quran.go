@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	datasetQuranSimpleFile         datasetFile = "../dataset/quran-simple-min.xml"
-	datasetFooladvandTranslateFile             = "../dataset/fa.fooladvand.xml"
+	datasetQuranSimpleFile         = "quran-simple-min.xml"
+	datasetFooladvandTranslateFile = "fa.fooladvand.xml"
 )
 
 type datasetFile string
@@ -27,13 +27,18 @@ var farsi Quran
 func init() {
 	var err error
 
-	base, err = newQuranByXML(datasetQuranSimpleFile)
+	p := os.Getenv("PATH_DATASET")
+	if p == "" {
+		p = "../dataset/"
+	}
+
+	base, err = newQuranByXML(p + datasetQuranSimpleFile)
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
 
-	farsi, err = newQuranByXML(datasetFooladvandTranslateFile)
+	farsi, err = newQuranByXML(p + datasetFooladvandTranslateFile)
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -53,7 +58,7 @@ func Fa() Quran {
 }
 
 // newQuranByXML read xml file of quran and returns a Quran struct
-func newQuranByXML(f datasetFile) (q Quran, err error) {
+func newQuranByXML(f string) (q Quran, err error) {
 	xmlFile, err := os.Open(string(f))
 	if err != nil {
 		return

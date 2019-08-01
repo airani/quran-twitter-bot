@@ -5,11 +5,5 @@
         "CONSUMER_SECRET_KEY" : "yyy",
         "ACCESS_TOKEN"        : "123-zzz",
         "ACCESS_TOKEN_SECRET" : "xyz"
-    },
-    "mongodb":{
-        "database": "quran",
-		"host":     "localhost",
-		"user":     "usr",
-		"password": "123456"
     }
 }

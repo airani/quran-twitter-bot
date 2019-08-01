@@ -14,5 +14,4 @@ deplop:
   script:
     - git --work-tree=$WORK_DIR checkout -f origin/release
     - cd $WORK_DIR
-    - whoami
     - docker-compose up -d --build

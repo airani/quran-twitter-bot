@@ -17,5 +17,7 @@ RUN ls /usr/share/zoneinfo
 RUN cp /usr/share/zoneinfo/Asia/Tehran /etc/localtime
 RUN echo "Asia/Tehran" >  /etc/timezone
 COPY --from=builder /go/bin/app /app
+COPY --from=builder /go/src/github.com/airani/quran-twitter-bot/dataset /dataset
+ENV PATH_DATASET="/dataset/"
 CMD ["./app"]
 LABEL Name=quran-twitter-bot Version=1.0
