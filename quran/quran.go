@@ -29,6 +29,7 @@ func init() {
 
 	p := os.Getenv("PATH_DATASET")
 	if p == "" {
+		// TODO fix dataset path for working in all modes
 		p = "../dataset/"
 	}
 
