@@ -48,7 +48,12 @@ func tweetRandAya() error {
 		return errors.New("aye is sajda obligatory")
 	}
 
-	ts := tweetString(s, a)
+	ts := tweetAyeText(s, a)
+	err := tweet(ts)
+	return err
+}
+
+func tweet(ts string) error {
 	if !canTweet(ts) {
 		return errors.New("aye length more than 280 char (twitter limit) and can't be tweet")
 	}
@@ -77,7 +82,7 @@ func canTweet(s string) bool {
 	return true
 }
 
-func tweetString(s quran.Sura, a quran.Aya) string {
+func tweetAyeText(s quran.Sura, a quran.Aya) string {
 	faS := quran.Fa().Sura(s.Index).Aya(a.Index)
 	return fmt.Sprintf(
 		"«%s»\n\n%s\n\n%s:%s",

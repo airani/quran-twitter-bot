@@ -53,7 +53,7 @@ func Test_canTweet(t *testing.T) {
 	}
 }
 
-func Test_tweetString(t *testing.T) {
+func Test_tweetAyeText(t *testing.T) {
 	q := quran.New()
 
 	type args struct {
@@ -75,8 +75,8 @@ func Test_tweetString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := tweetString(tt.args.s, tt.args.a); got != tt.want {
-				t.Errorf("tweetString() = %v, want %v", got, tt.want)
+			if got := tweetAyeText(tt.args.s, tt.args.a); got != tt.want {
+				t.Errorf("tweetAyeText() = %v, want %v", got, tt.want)
 			}
 		})
 	}
