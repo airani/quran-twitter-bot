@@ -48,8 +48,7 @@ func tweetRandAya() error {
 		return errors.New("aye is sajda obligatory")
 	}
 
-	ts := tweetAyeText(s, a)
-	err := tweet(ts)
+	err := tweet(tweetAyeText(s, a))
 	return err
 }
 
