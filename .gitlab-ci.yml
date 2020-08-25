@@ -8,7 +8,7 @@ stages:
 deplop:
   stage: deploy
   tags:
-    - hetzner1
+    - hetzner2
   only:
     - release
   script:
