@@ -1,5 +1,5 @@
 #build stage
-FROM golang:alpine AS builder
+FROM golang:1.14-alpine AS builder
 RUN apk add --no-cache git ca-certificates
 WORKDIR /go/src/github.com/airani/quran-twitter-bot
 COPY go.mod $WORKDIR
