@@ -17,7 +17,6 @@ RUN ls /usr/share/zoneinfo
 RUN cp /usr/share/zoneinfo/Asia/Tehran /etc/localtime
 RUN echo "Asia/Tehran" >  /etc/timezone
 COPY --from=builder /go/bin/app /app
-COPY --from=builder /go/src/github.com/airani/quran-twitter-bot/dataset /dataset
 COPY --from=builder /go/src/github.com/airani/quran-twitter-bot/config /config
 ENV PATH_DATASET="/dataset/"
 CMD ["./app", "tweetAye", "--config=/config/.prod.json"]
